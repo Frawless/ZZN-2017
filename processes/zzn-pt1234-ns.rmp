@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="7.6.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="7.6.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="retrieve" compatibility="7.6.001" expanded="true" height="68" name="Retrieve air" width="90" x="45" y="442">
+        <parameter key="repository_entry" value="../data/air"/>
+      </operator>
+      <operator activated="true" class="legacy:read_model" compatibility="7.6.001" expanded="true" height="68" name="Read Model" width="90" x="45" y="340">
+        <parameter key="model_file" value="/home/ferino/Plocha/brno skola/VUT/MIS - Informační systémy/3. semester/ZZN - Získávání znalostí z databází/projekt/Local Repository/data/modelPT1.mod"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="7.6.001" expanded="true" height="82" name="Apply Model (3)" width="90" x="246" y="391">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <operator activated="true" class="set_role" compatibility="7.6.001" expanded="true" height="82" name="Set Role" width="90" x="380" y="391">
+        <parameter key="attribute_name" value="prediction(CO(GT))"/>
+        <parameter key="target_role" value="regular"/>
+        <list key="set_additional_roles"/>
+      </operator>
+      <operator activated="true" class="legacy:read_model" compatibility="7.6.001" expanded="true" height="68" name="Read Model (2)" width="90" x="45" y="238">
+        <parameter key="model_file" value="/home/ferino/Plocha/brno skola/VUT/MIS - Informační systémy/3. semester/ZZN - Získávání znalostí z databází/projekt/Local Repository/data/modelPT2.mod"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="7.6.001" expanded="true" height="82" name="Apply Model (4)" width="90" x="246" y="238">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <operator activated="true" class="set_role" compatibility="7.6.001" expanded="true" height="82" name="Set Role (5)" width="90" x="380" y="238">
+        <parameter key="attribute_name" value="prediction(NMHC(GT))"/>
+        <parameter key="target_role" value="regular"/>
+        <list key="set_additional_roles"/>
+      </operator>
+      <operator activated="true" class="legacy:read_model" compatibility="7.6.001" expanded="true" height="68" name="Read Model (3)" width="90" x="112" y="136">
+        <parameter key="model_file" value="/home/ferino/Plocha/brno skola/VUT/MIS - Informační systémy/3. semester/ZZN - Získávání znalostí z databází/projekt/Local Repository/data/modelPT3.mod"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="7.6.001" expanded="true" height="82" name="Apply Model (6)" width="90" x="380" y="136">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <operator activated="true" class="set_role" compatibility="7.6.001" expanded="true" height="82" name="Set Role (7)" width="90" x="514" y="136">
+        <parameter key="attribute_name" value="prediction(NOx(GT))"/>
+        <parameter key="target_role" value="regular"/>
+        <list key="set_additional_roles"/>
+      </operator>
+      <operator activated="true" class="legacy:read_model" compatibility="7.6.001" expanded="true" height="68" name="Read Model (4)" width="90" x="246" y="34">
+        <parameter key="model_file" value="/home/ferino/Plocha/brno skola/VUT/MIS - Informační systémy/3. semester/ZZN - Získávání znalostí z databází/projekt/Local Repository/data/modelPT4.mod"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="7.6.001" expanded="true" height="82" name="Apply Model (8)" width="90" x="581" y="34">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <connect from_op="Retrieve air" from_port="output" to_op="Apply Model (3)" to_port="unlabelled data"/>
+      <connect from_op="Read Model" from_port="output" to_op="Apply Model (3)" to_port="model"/>
+      <connect from_op="Apply Model (3)" from_port="labelled data" to_op="Set Role" to_port="example set input"/>
+      <connect from_op="Set Role" from_port="example set output" to_op="Apply Model (4)" to_port="unlabelled data"/>
+      <connect from_op="Read Model (2)" from_port="output" to_op="Apply Model (4)" to_port="model"/>
+      <connect from_op="Apply Model (4)" from_port="labelled data" to_op="Set Role (5)" to_port="example set input"/>
+      <connect from_op="Set Role (5)" from_port="example set output" to_op="Apply Model (6)" to_port="unlabelled data"/>
+      <connect from_op="Read Model (3)" from_port="output" to_op="Apply Model (6)" to_port="model"/>
+      <connect from_op="Apply Model (6)" from_port="labelled data" to_op="Set Role (7)" to_port="example set input"/>
+      <connect from_op="Set Role (7)" from_port="example set output" to_op="Apply Model (8)" to_port="unlabelled data"/>
+      <connect from_op="Read Model (4)" from_port="output" to_op="Apply Model (8)" to_port="model"/>
+      <connect from_op="Apply Model (8)" from_port="labelled data" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>
